@@ -70,6 +70,7 @@ const CreateStudentValidationSchema = z.object({
       guardian: GuardianValidationSchema,
       localGuardian: LocalGuardianValidationSchema,
       profileImg: z.string().min(1, "Profile Image is required"),
+      admissionSemester: z.string(),
     }),
   }),
 });
