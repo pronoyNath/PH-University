@@ -6,7 +6,7 @@ import { UserModel } from "./user.model";
 
 const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   // create a user object
-  const userData : Partial<TUser> = {};
+  const userData: Partial<TUser> = {};
 
   // if password is not given use default password
   /* if (!password) {
@@ -33,11 +33,9 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
     studentData.id = newUser.id; // embeding id
     studentData.user = newUser._id; //reference id
 
-    const newStudent = await StudentModel.create(studentData)
+    const newStudent = await StudentModel.create(studentData);
     return newStudent;
   }
-
-  
 };
 
 export const UserServices = {

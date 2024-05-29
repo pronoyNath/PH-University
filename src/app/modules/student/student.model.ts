@@ -88,7 +88,7 @@ const studentSchema = new Schema<TStudent>({
     type: UserNameSchema,
     required: [true, "Student Name is required"],
   },
- 
+
   gender: {
     type: String,
     enum: {
@@ -134,7 +134,7 @@ const studentSchema = new Schema<TStudent>({
     required: [true, "Local Guardian information is required"],
   },
   profileImg: { type: String, required: [true, "Profile Image is required"] },
-  
+
   isDeleted: {
     type: Boolean,
     default: false,

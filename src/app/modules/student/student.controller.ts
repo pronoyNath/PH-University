@@ -1,7 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import { StudentServices } from "./student.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
+import catchAsync from "../../utils/catchAsync";
 
 // const createStudent = async (req: Request, res: Response) => {
 //   try {
@@ -28,12 +29,8 @@ import httpStatus from "http-status";
 //   }
 // };
 
-const getAllStudents = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+const getAllStudents = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const result = await StudentServices.getAllStudentsFromDB();
 
     // res.status(200).json({
@@ -48,18 +45,11 @@ const getAllStudents = async (
       message: "Students are retrieve sucessfully",
       data: result,
     });
-
-  } catch (err) {
-    next(err);
   }
-};
+);
 
-const getSingleStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+const getSingleStudent = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const { studentId } = req.params;
     const result = await StudentServices.getSingleStudentFromDB(studentId);
 
@@ -75,19 +65,10 @@ const getSingleStudent = async (
       message: "Student is created sucessfully",
       data: result,
     });
-
-    
-  } catch (err) {
-    next(err);
-
   }
-};
-const deleteStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
+);
+const deleteStudent = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
     const { studentId } = req.params;
     const result = await StudentServices.deleteStudentFromDB(studentId);
 
@@ -103,12 +84,8 @@ const deleteStudent = async (
       message: "Student is deleted sucessfully",
       data: result,
     });
-
-
-  } catch (err) {
-    next(err);
   }
-};
+);
 
 export const StudentControllers = {
   // createStudent,

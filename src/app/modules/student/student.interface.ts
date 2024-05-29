@@ -27,16 +27,16 @@ export type TStudent = {
   user: Types.ObjectId; //mongoose theke objectId type (referencer er jonne create kora)
   name: TUserName;
   password: string;
-  gender: 'male' | 'female' | 'other';
+  gender: "male" | "female" | "other";
   email: string;
   dateOfBirth: string;
   contactNo: string;
   emergencyContactNo: string;
-  bloodGroup?: 'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
+  bloodGroup?: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
   presentAddress: string;
   permanentAddress: string;
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
-  isDeleted: boolean
+  isDeleted: boolean;
 };

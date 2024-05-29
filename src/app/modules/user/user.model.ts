@@ -28,7 +28,7 @@ const userSchema = new Schema<TUser>(
       enum: {
         values: ["in-progress", "blocked"],
       },
-      default: 'in-progress'
+      default: "in-progress",
     },
     isDeleted: {
       type: Boolean,
@@ -37,7 +37,7 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 //pre save middleware/ hook
@@ -46,7 +46,7 @@ userSchema.pre("save", async function (next) {
   // hashing password and save into db
   user.password = await bcrypt.hash(
     user.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt_salt_rounds),
   );
 });
 
@@ -57,6 +57,4 @@ userSchema.post("save", function (doc, next) {
   next();
 });
 
-
-
-export const UserModel = model<TUser>("user",userSchema)
+export const UserModel = model<TUser>("user", userSchema);

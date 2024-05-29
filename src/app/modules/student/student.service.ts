@@ -1,5 +1,4 @@
-import { TStudent } from './student.interface';
-import { StudentModel } from './student.model';
+import { StudentModel } from "./student.model";
 
 // const createStudentIntoDB = async (student: TStudent) => {
 //   const result = await StudentModel.create(student);
@@ -17,7 +16,7 @@ const getSingleStudentFromDB = async (id: string) => {
 };
 
 const deleteStudentFromDB = async (id: string) => {
-  const result = await StudentModel.updateOne({ id },{isDeleted: true});
+  const result = await StudentModel.updateOne({ id }, { isDeleted: true });
   return result;
 };
 
@@ -25,5 +24,5 @@ export const StudentServices = {
   // createStudentIntoDB,
   getAllStudentsFromDB,
   getSingleStudentFromDB,
-  deleteStudentFromDB
+  deleteStudentFromDB,
 };
