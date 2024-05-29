@@ -8,6 +8,7 @@ const userSchema = new Schema<TUser>(
     id: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -37,7 +38,7 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 //pre save middleware/ hook
@@ -46,7 +47,7 @@ userSchema.pre("save", async function (next) {
   // hashing password and save into db
   user.password = await bcrypt.hash(
     user.password,
-    Number(config.bcrypt_salt_rounds),
+    Number(config.bcrypt_salt_rounds)
   );
 });
 
