@@ -23,14 +23,13 @@ router.get(
 
 router.get('/', AcademicSemestersController.getAllAcademicSemesters);
 
-// router.patch(
-//   '/:semesterId',
-//   validateRequest(
-//     AcademicSemesterValidations.updateAcademicSemesterValidationSchema,
-//   ),
-//   AcademicSemestersController.updateAcademicSemester,
-// );
-
+router.patch(
+  '/:semesterId',
+  validateRequest(
+    AcademicSemesterValidations.updateAcademicSemesterValidationSchema,
+  ),
+  AcademicSemestersController.updateAcademicSemester,
+);
 
 
 export const AcademicSemesterRoutes = router;
