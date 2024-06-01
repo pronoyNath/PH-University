@@ -1,14 +1,13 @@
 import { NextFunction, Request, RequestHandler, Response } from "express";
 import catchAsync from "../../utils/catchAsync";
-import { AcademicFacultyervices } from "./academicFaculty.service";
+import { AcademicFacultyServices } from "./academicFaculty.service";
 import sendResponse from "../../utils/sendResponse";
 import httpStatus from "http-status";
-
 
 const createAcademicfaculty = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // // will call service func to send this data
-    const result = await AcademicFacultyervices.createAcademicFacultyIntoDB(
+    const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(
       req.body
     );
 
@@ -23,7 +22,7 @@ const createAcademicfaculty = catchAsync(
 );
 
 const getAllAcademicfaculties = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyervices.getAllAcademicFacultiesFromDB();
+  const result = await AcademicFacultyServices.getAllAcademicFacultiesFromDB();
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -36,7 +35,7 @@ const getAllAcademicfaculties = catchAsync(async (req, res) => {
 const getSingleAcademicfaculty = catchAsync(async (req, res) => {
   const { facultyId } = req.params;
   const result =
-    await AcademicFacultyervices.getSingleAcademicFacultyFromDB(facultyId);
+    await AcademicFacultyServices.getSingleAcademicFacultyFromDB(facultyId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -48,15 +47,15 @@ const getSingleAcademicfaculty = catchAsync(async (req, res) => {
 
 const updateAcademicfaculty = catchAsync(async (req, res) => {
   const { facultyId } = req.params;
-  const result = await AcademicFacultyervices.updateAcademicFacultyIntoDB(
+  const result = await AcademicFacultyServices.updateAcademicFacultyIntoDB(
     facultyId,
-    req.body,
+    req.body
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Academic faculty is updated succesfully',
+    message: "Academic faculty is updated succesfully",
     data: result,
   });
 });
@@ -65,5 +64,5 @@ export const AcademicfacultiesController = {
   createAcademicfaculty,
   getAllAcademicfaculties,
   getSingleAcademicfaculty,
-  updateAcademicfaculty
+  updateAcademicfaculty,
 };
