@@ -53,16 +53,10 @@ const getSingleStudent = catchAsync(
     const { studentId } = req.params;
     const result = await StudentServices.getSingleStudentFromDB(studentId);
 
-    // res.status(200).json({
-    //   succuess: true,
-    //   message: "Student is retrieve sucessfully",
-    //   data: result,
-    // });
-
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Student is created sucessfully",
+      message: "Students is retrieve sucessfully",
       data: result,
     });
   }
