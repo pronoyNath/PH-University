@@ -41,7 +41,7 @@ const GuardianSchema = new Schema<TGuardian>({
     type: String,
     required: [true, "Father Occupation is required"],
   },
-  fatherContact: {
+  fatherContactNo: {
     type: String,
     required: [true, "Father Contact is required"],
   },
@@ -50,7 +50,7 @@ const GuardianSchema = new Schema<TGuardian>({
     type: String,
     required: [true, "Mother Occupation is required"],
   },
-  motherContact: {
+  motherContactNo: {
     type: String,
     required: [true, "Mother Contact is required"],
   },

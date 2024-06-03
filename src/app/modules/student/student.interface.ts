@@ -9,10 +9,10 @@ export type TUserName = {
 export type TGuardian = {
   fatherName: string;
   fatherOccupation: string;
-  fatherContact: string;
+  fatherContactNo: string;
   motherName: string;
   motherOccupation: string;
-  motherContact: string;
+  motherContactNo: string;
 };
 
 export type TLocalGuardian = {
