@@ -25,7 +25,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     payload.admissionSemester
   );
 
-  // intialize session transaction 
+  // intialize session transaction
   const session = await mongoose.startSession();
 
   try {
@@ -57,10 +57,10 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     await session.endSession(); //terminated
 
     return newStudent;
-  } catch (err) {
+  } catch (err: any) {
     await session.abortTransaction();
     await session.endSession(); //terminated
-    throw new AppError(httpStatus.BAD_REQUEST,"Failed to create student!")
+    throw new AppError(httpStatus.BAD_REQUEST, err);
   }
 };
 

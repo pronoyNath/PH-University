@@ -10,8 +10,19 @@ import { TStudent } from "./student.interface";
 //   return result;
 // };
 
-const getAllStudentsFromDB = async () => {
-  const result = await StudentModel.find()
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
+  let searchTerm = ""; // SET DEFAULT VALUE
+
+  // IF searchTerm  IS GIVEN SET IT
+  if (query?.searchTerm) {
+    searchTerm = query?.searchTerm as string;
+  }
+
+  const result = await StudentModel.find({
+    $or: ["email", "name.firstName", "presentAddress"].map((field) => ({
+      [field]: { $regex: searchTerm, $options: "i" },
+    })),
+  })
     .populate("admissionSemester")
     .populate({
       path: "academicDepartment",
