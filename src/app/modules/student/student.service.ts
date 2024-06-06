@@ -4,32 +4,28 @@ import { AppError } from "../../errors/AppError";
 import httpStatus from "http-status";
 import { UserModel } from "../user/user.model";
 import { TStudent } from "./student.interface";
-
-// const createStudentIntoDB = async (student: TStudent) => {
-//   const result = await StudentModel.create(student);
-//   return result;
-// };
+import QueryBuilder from "../../builder/QueryBuilder";
+import { studentSearchableFields } from "./student.constant";
 
 const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
-  let searchTerm = ""; // SET DEFAULT VALUE
+  const studentQuery = new QueryBuilder(
+    StudentModel.find() //find all student (if no query is given)
+      .populate("admissionSemester")
+      .populate({
+        path: "academicDepartment",
+        populate: {
+          path: "academicFaculty",
+        },
+      }),
+    query // default parameter to make QueryModel
+  )
+    .search(studentSearchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
 
-  // IF searchTerm  IS GIVEN SET IT
-  if (query?.searchTerm) {
-    searchTerm = query?.searchTerm as string;
-  }
-
-  const result = await StudentModel.find({
-    $or: ["email", "name.firstName", "presentAddress"].map((field) => ({
-      [field]: { $regex: searchTerm, $options: "i" },
-    })),
-  })
-    .populate("admissionSemester")
-    .populate({
-      path: "academicDepartment",
-      populate: {
-        path: "academicFaculty",
-      },
-    });
+  const result = await studentQuery.modelQuery;
   return result;
 };
 
