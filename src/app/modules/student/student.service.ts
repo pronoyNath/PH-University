@@ -30,7 +30,7 @@ const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleStudentFromDB = async (id: string) => {
-  const result = await StudentModel.findOne({ id })
+  const result = await StudentModel.findById(id)
     .populate("admissionSemester")
     .populate({
       path: "academicDepartment",
@@ -55,8 +55,8 @@ const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
 
     guardian.fatherOccupation = Teacher
 
-    name.firstName = 'Mezba'
-    name.lastName = 'Abedin'
+    name.firstName = 'Pronoy'
+    name.lastName = 'Nath'
   */
 
   if (name && Object.keys(name).length) {
@@ -80,14 +80,10 @@ const updateStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
 
   // console.log(modifiedUpdatedData, "modi");
 
-  const result = await StudentModel.findOneAndUpdate(
-    { id },
-    modifiedUpdatedData,
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const result = await StudentModel.findByIdAndUpdate(id, modifiedUpdatedData, {
+    new: true,
+    runValidators: true,
+  });
   return result;
 };
 
@@ -96,8 +92,8 @@ const deleteStudentFromDB = async (id: string) => {
 
   try {
     session.startTransaction();
-    const deletedStudent = await StudentModel.findOneAndUpdate(
-      { id },
+    const deletedStudent = await StudentModel.findByIdAndUpdate(
+      id,
       { isDeleted: true },
       { new: true, session }
     );
@@ -105,8 +101,12 @@ const deleteStudentFromDB = async (id: string) => {
     if (!deletedStudent) {
       throw new AppError(httpStatus.BAD_REQUEST, "Failed to delete student!");
     }
-    const deletedUser = await UserModel.findOneAndUpdate(
-      { id },
+
+    // get user _id from deletedFaculty
+    const userId = deletedStudent.user;
+
+    const deletedUser = await UserModel.findByIdAndUpdate(
+      userId,
       { isDeleted: true },
       { new: true, session }
     );

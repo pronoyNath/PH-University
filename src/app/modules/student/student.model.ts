@@ -107,7 +107,7 @@ const studentSchema = new Schema<TStudent>({
     //   message: '{VALUE} is not valid email type.',
     // },
   },
-  dateOfBirth: { type: String, required: [true, "Date of Birth is required"] },
+  dateOfBirth: { type: Date, required: [true, "Date of Birth is required"] },
   contactNo: { type: String, required: [true, "Contact Number is required"] },
   emergencyContactNo: {
     type: String,
