@@ -1,15 +1,30 @@
-export type TUser = {
+/* eslint-disable no-unused-vars */
+import { Model } from "mongoose";
+import { USER_ROLE } from "./user.constant";
+import { User } from "./user.model";
+
+export interface TUser {
   id: string;
   password: string;
   needsPasswordChange: boolean;
+  passwordChangedAt?: Date;
   role: "admin" | "student" | "faculty";
   status: "in-progress" | "blocked";
   isDeleted: boolean;
-};
+}
 
-export type TResponse<T> = {
-  statusCode: number;
-  success: boolean;
-  message?: string;
-  data: T; //type generic (any type data)
-};
+export interface UserModel extends Model<TUser> {
+  //instance methods for checking if the user exist
+  isUserExistsByCustomId(id: string): Promise<TUser>;
+  //instance methods for checking if passwords are matched
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string
+  ): Promise<boolean>;
+  isJWTIssuedBeforePasswordChanged(
+    passwordChangedTimestamp: Date,
+    jwtIssuedTimestamp: number
+  ): boolean;
+}
+
+export type TUserRole = keyof typeof USER_ROLE;
