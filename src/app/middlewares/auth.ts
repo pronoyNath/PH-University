@@ -21,39 +21,39 @@ const auth = (...requiredRoles: TUserRole[]) => {
       token,
       config.jwt_access_secret as string
     ) as JwtPayload;
-    console.log(decoded,"decoded");
+
     const { role, userId, iat } = decoded.jwtPayload;
     
     // checking if the user is exist
-    // const user = await User.isUserExistsByCustomId(decoded?.userId);
+    const user = await User.isUserExistsByCustomId(decoded?.userId);
 
-    // if (!user) {
-    //   throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
-    // }
+    if (!user) {
+      throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
+    }
     // checking if the user is already deleted
 
-    // const isDeleted = user?.isDeleted;
+    const isDeleted = user?.isDeleted;
 
-    // if (isDeleted) {
-    //   throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
-    // }
+    if (isDeleted) {
+      throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
+    }
 
     // checking if the user is blocked
-    // const userStatus = user?.status;
+    const userStatus = user?.status;
 
-    // if (userStatus === 'blocked') {
-    //   throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
-    // }
+    if (userStatus === 'blocked') {
+      throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
+    }
 
-    // if (
-    //   user.passwordChangedAt &&
-    //   User.isJWTIssuedBeforePasswordChanged(
-    //     user.passwordChangedAt,
-    //     iat as number,
-    //   )
-    // ) {
-    //   throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
-    // }
+    if (
+      user.passwordChangedAt &&
+      User.isJWTIssuedBeforePasswordChanged(
+        user.passwordChangedAt,
+        iat as number,
+      )
+    ) {
+      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+    }
     
     // j role ta pass kora hoise seta ki amader defined validator(route) role er sathe mile ki na
     if (requiredRoles && !requiredRoles.includes(role)) {
