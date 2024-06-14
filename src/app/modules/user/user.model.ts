@@ -13,7 +13,7 @@ const userSchema = new Schema<TUser, UserModel>(
     password: {
       type: String,
       required: true,
-      select: 0,
+      select: 0, //this means never will get this data to client
     },
     needsPasswordChange: {
       type: Boolean,
