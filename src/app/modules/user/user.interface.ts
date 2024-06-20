@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Model } from "mongoose";
 import { USER_ROLE } from "./user.constant";
-import { User } from "./user.model";
 
 export interface TUser {
   id: string;
